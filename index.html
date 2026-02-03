@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radiology Schedule Viewer</title>
+    
+    <!-- EMBEDDED FAVICON -->
+    <link rel="icon" type="image/png" href="data:image/png;base64,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">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        /* LIGHT MODE (DEFAULT) */
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-dim: #64748b;
+            --accent: #a855f7;
+            --border: #e2e8f0;
+            --day-bg: #f1f5f9;
+            --day-border: #e2e8f0;
+            
+            --shift-ir: #f59e0b;
+            --shift-re: #10b981;
+            --shift-h: #ef4444;
+            --shift-v: #3b82f6;
+            --shift-other: #6366f1;
+        }
+
+        /* DARK MODE */
+        body.dark-mode {
+            --bg-color: #0a0a0a;
+            --card-bg: #161616;
+            --text-main: #efefef;
+            --text-dim: #888;
+            --border: #2a2a2a;
+            --day-bg: #1f1f1f;
+            --day-border: #252525;
+        }
+
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            margin: 0; padding: 20px; 
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; }
+
+        .controls-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        /* Mode Selector Styling */
+        .mode-selector {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .mode-selector label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            width: 100%;
+        }
+
+        .month-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .month-title {
+            color: var(--accent);
+            text-align: center;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+        }
+
+        .day-label {
+            text-align: center; font-size: 0.6rem; color: var(--text-dim);
+            font-weight: bold; padding-bottom: 4px;
+        }
+
+        .day {
+            background: var(--day-bg); 
+            min-height: 52px; padding: 2px;
+            border-radius: 2px; display: flex; flex-direction: column;
+            border: 1px solid var(--day-border); overflow: hidden;
+        }
+
+        .day-num { color: var(--text-dim); font-size: 0.65rem; font-weight: bold; }
+
+        .shift-text {
+            font-size: 0.6rem; 
+            font-weight: 800; 
+            padding: 2px 1px;
+            border-radius: 2px; 
+            text-align: center; 
+            line-height: 1.1; 
+            margin-top: 1px; 
+            word-wrap: break-word;
+            color: #ffffff !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+        }
+
+        .color-IR { background-color: var(--shift-ir); }
+        .color-RE { background-color: var(--shift-re); }
+        .color-H  { background-color: var(--shift-h); }
+        .color-V  { background-color: var(--shift-v); }
+        .color-OTHER { background-color: var(--shift-other); }
+
+        .empty-cell { background: transparent; border: none; }
+
+        select {
+            background: var(--card-bg); color: var(--text-main); padding: 8px;
+            border-radius: 4px; border: 1px solid var(--accent);
+            width: 250px; margin: 10px 0;
+        }
+
+        button {
+            background: var(--accent); color: white; border: none;
+            padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;
+        }
+
+        .print-only-header { display: none; }
+
+        @media print {
+            .controls-card { display: none; }
+            body { background-color: white !important; color: black !important; padding: 0; }
+            .print-only-header {
+                display: block; position: fixed; top: 0; left: 0; width: 100%;
+                text-align: center; font-size: 1.4rem; font-weight: bold;
+                padding: 10px 0; background: white; border-bottom: 1px solid #000; z-index: 1000;
+            }
+            .container { margin-top: 60px; }
+            .month-card { border: 1px solid #ddd; background: white !important; page-break-inside: avoid; }
+            .day { background: white !important; border: 1px solid #eee !important; }
+            .day-num { color: #333 !important; }
+            .calendar-grid { grid-template-columns: repeat(3, 1fr) !important; display: grid !important; margin-top: 20px; }
+            .month-card:nth-child(7) { page-break-before: always; margin-top: 60px; }
+            .shift-text { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="printHeader" class="print-only-header"></div>
+
+<div class="container">
+    <div class="controls-card">
+        <h2 id="main-title" style="margin-top:0">Radiologist Schedule Viewer</h2>
+        
+        <div id="input-methods">
+            <input type="file" id="fileInput" accept=".csv" style="margin-bottom:10px">
+        </div>
+
+        <div class="mode-selector">
+            <label>
+                <input type="radio" name="viewMode" value="light" checked onclick="setTheme('light')"> Light Mode
+            </label>
+            <label>
+                <input type="radio" name="viewMode" value="dark" onclick="setTheme('dark')"> Dark Mode
+            </label>
+        </div>
+        
+        <div id="selection-area" style="display:none; border-top: 1px solid var(--border); padding-top: 15px;">
+            <select id="radSelect">
+                <option value="">-- Select Radiologist --</option>
+            </select>
+            <div style="margin-top:10px">
+                <button onclick="window.print()">Print PDF</button>
+            </div>
+        </div>
+        
+        <div id="error-log" style="color: var(--shift-h); margin-top: 10px;"></div>
+    </div>
+
+    <div id="calendar-output" class="calendar-grid"></div>
+</div>
+
+<script>
+    let csvRows = [];
+    let detectedYear = 2026; 
+
+    window.onload = async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const fileParam = urlParams.get('file');
+        const radParam = urlParams.get('rad');
+        const modeParam = urlParams.get('mode');
+
+        if (modeParam === 'dark') setTheme('dark');
+        else if (modeParam === 'light') setTheme('light');
+
+        if (fileParam) {
+            try {
+                const response = await fetch(fileParam);
+                if (!response.ok) throw new Error("File not found.");
+                const text = await response.text();
+                parseAndPopulate(text, radParam);
+            } catch (err) {
+                document.getElementById('error-log').innerText = "URL Error: Could not find '" + fileParam + "'.";
+            }
+        }
+    };
+
+    function setTheme(mode) {
+        const body = document.body;
+        if (mode === 'dark') {
+            body.classList.add('dark-mode');
+            document.querySelector('input[value="dark"]').checked = true;
+        } else {
+            body.classList.remove('dark-mode');
+            document.querySelector('input[value="light"]').checked = true;
+        }
+    }
+
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+        document.getElementById('calendar-output').innerHTML = '';
+        document.getElementById('selection-area').style.display = 'none';
+        document.getElementById('main-title').innerText = "Radiologist Schedule Viewer";
+        
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => parseAndPopulate(event.target.result);
+        reader.readAsText(file);
+    });
+
+    function detectMajorityYear(rows) {
+        let yearCounts = {};
+        for (let i = 0; i < Math.min(rows.length, 10); i++) {
+            rows[i].forEach(cell => {
+                if (cell && cell.length > 5) {
+                    const d = new Date(cell);
+                    if (!isNaN(d.getTime())) {
+                        const y = d.getFullYear();
+                        yearCounts[y] = (yearCounts[y] || 0) + 1;
+                    }
+                }
+            });
+        }
+        const keys = Object.keys(yearCounts);
+        if (keys.length === 0) return 2026;
+        return parseInt(keys.reduce((a, b) => yearCounts[a] > yearCounts[b] ? a : b));
+    }
+
+    function parseAndPopulate(text, targetRadName = null) {
+        csvRows = parseCSV(text);
+        detectedYear = detectMajorityYear(csvRows);
+        
+        const select = document.getElementById('radSelect');
+        select.innerHTML = '<option value="">-- Select Radiologist --</option>';
+
+        let autoIndex = -1;
+        csvRows.forEach((row, index) => {
+            const rawName = row[0]?.trim();
+            if (rawName && index > 0 && rawName.length > 2 && !["Need", "Per Diem", "Locums", "Date"].includes(rawName)) {
+                const opt = document.createElement('option');
+                opt.value = index;
+                opt.innerText = rawName;
+                select.appendChild(opt);
+
+                if (targetRadName && rawName.toLowerCase().includes(targetRadName.toLowerCase())) {
+                    autoIndex = index;
+                }
+            }
+        });
+
+        document.getElementById('selection-area').style.display = 'block';
+        if (autoIndex !== -1) {
+            select.value = autoIndex;
+            triggerRender(autoIndex);
+        }
+    }
+
+    document.getElementById('radSelect').addEventListener('change', (e) => triggerRender(e.target.value));
+
+    function triggerRender(rowIndex) {
+        if (!rowIndex) {
+            document.getElementById('calendar-output').innerHTML = '';
+            return;
+        }
+        const name = csvRows[rowIndex][0].trim();
+        const titleText = `${name} - Schedule`;
+        
+        document.getElementById('main-title').innerText = titleText;
+        document.getElementById('printHeader').innerText = titleText;
+        
+        generateCalendars(rowIndex);
+    }
+
+    function generateCalendars(rowIndex) {
+        const row = csvRows[rowIndex];
+        const output = document.getElementById('calendar-output');
+        output.innerHTML = '';
+        const scheduleData = {};
+        const startDate = new Date(detectedYear, 0, 1);
+        
+        for (let i = 1; i < row.length; i++) {
+            let d = new Date(detectedYear, 0, 1);
+            d.setDate(startDate.getDate() + (i - 1));
+            const key = d.toISOString().split('T')[0];
+            scheduleData[key] = row[i]?.trim() || "";
+        }
+
+        for (let m = 0; m < 12; m++) {
+            output.appendChild(renderMonth(detectedYear, m, scheduleData));
+        }
+    }
+
+    function renderMonth(year, month, schedule) {
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const weekdays = ["S", "M", "T", "W", "T", "F", "S"];
+        const card = document.createElement('div');
+        card.className = 'month-card';
+        let html = `<div class="month-title">${months[month]}</div><div class="days-grid">`;
+        weekdays.forEach(wd => html += `<div class="day-label">${wd}</div>`);
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        for (let i = 0; i < firstDay; i++) html += `<div class="day empty-cell"></div>`;
+
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dateObj = new Date(year, month, d);
+            const dateKey = dateObj.toISOString().split('T')[0];
+            const shift = schedule[dateKey] || "";
+            let colorClass = "";
+            const s = shift.toUpperCase();
+            
+            if (s.startsWith("IR")) colorClass = "color-IR";
+            else if (s.startsWith("RE")) colorClass = "color-RE";
+            else if (s === "H") colorClass = "color-H";
+            else if (s === "V") colorClass = "color-V";
+            else if (shift) colorClass = "color-OTHER";
+
+            html += `<div class="day"><span class="day-num">${d}</span>${shift ? `<div class="shift-text ${colorClass}">${shift}</div>` : ''}</div>`;
+        }
+        card.innerHTML = html + `</div>`;
+        return card;
+    }
+
+    function parseCSV(text) {
+        const p = new RegExp(("(\\,|\\r?\\n|\\r|^)(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|([^\\,\\r\\n]*))"), "gi");
+        const d = [[]]; let m = null;
+        while (m = p.exec(text)) {
+            let a = m[1];
+            if (a.length && a !== ",") d.push([]);
+            d[d.length - 1].push(m[2] ? m[2].replace(/\"\"/g, "\"") : m[3]);
+        }
+        return d;
+    }
+</script>
+</body>
+</html>
